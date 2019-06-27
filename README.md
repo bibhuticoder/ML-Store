@@ -25,9 +25,9 @@ newly trained version of the model which then can further be distributed for fur
 training or be used by the engineers for deployment in their own applications.
 
 ## File Structure
-- /dml_backend : Laravel Server for authentication and content management
-- /dml_frontend: Vuejs application to access and train models on browser
-- dml_backend/fed_avg_server: NodeJS server to perform federated-aveging of updates
+- **/dml_backend** : Laravel Server for authentication and content management
+- **/dml_frontend**: Vuejs application to access and train models on browser
+- **/dml_backend/fed_avg_server**: NodeJS server to perform federated-aveging of updates
 
 ## Results
 
