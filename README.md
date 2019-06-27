@@ -50,9 +50,9 @@ training or be used by the engineers for deployment in their own applications.
 
 ## Team Members
   
-- Bibhuti Poudyal
-- Rohan Shrestha
-- Roshan Chapagain
+- Bibhuti Poudyal (https://github.com/bibhuticoder)
+- Rohan Shrestha (https://github.com/rohshr)
+- Roshan Chapagain (https://github.com/Arobce)
 
 For more details, view the [project report](https://github.com/bibhuticoder/ML-Store/blob/master/doc_assets/ML-store.pdf).
 
