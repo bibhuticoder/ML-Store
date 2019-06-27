@@ -30,3 +30,27 @@ training or be used by the engineers for deployment in their own applications.
 - dml_backend/fed_avg_server: NodeJS server to perform federated-aveging of updates
 
 ## Results
+
+<table border="0">
+  <tr>
+    <td>
+      <img src="./doc_assets/home.PNG" width="400"/>
+    </td>
+    <td>
+      <img src="./doc_assets/dashboard.PNG" width="400"/>
+    </td>
+   <tr>
+  
+  <tr>
+    <td colspan="2">
+      <img src="./doc_assets/model_training.PNG"/>
+    </td>
+  </tr>
+  </table>
+
+## Team Members
+  
+- Bibhuti Poudyal
+- Rohan Shrestha
+- Roshan Chapagain
+
