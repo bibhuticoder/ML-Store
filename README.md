@@ -12,6 +12,8 @@ models that would respect those needs. To that end, this project involved making
 platform to share and train machine learning models with on-device machine learning
 without the need to upload private user data to a central server.
 
+![system workflow](./doc_assets/workflow_infographic.PNG)
+
 In this project, a machine learning engineer would upload their machine learning
 models they would like to have trained. Instead of the data being provided to the model
 in the server from various sources, the model itself is distributed among various
@@ -21,3 +23,10 @@ their participation. The updates to the model is sent back to the server as new 
 values for the model. Updates from all the different users are averaged to generate a
 newly trained version of the model which then can further be distributed for further
 training or be used by the engineers for deployment in their own applications.
+
+## File Structure
+- /dml_backend : Laravel Server for authentication and content management
+- /dml_frontend: Vuejs application to access and train models on browser
+- dml_backend/fed_avg_server: NodeJS server to perform federated-aveging of updates
+
+## Results
