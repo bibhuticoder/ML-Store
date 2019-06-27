@@ -1,0 +1,19 @@
+{
+  "private": true,
+  "scripts": {
+    "fedserver": "node ./fedserver.js"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^1.1.0",
+    "axios": "^0.18.0",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "^4.16.4",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0",
+    "multiparty": "^4.2.1"
+  }
+}

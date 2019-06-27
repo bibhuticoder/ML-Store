@@ -1,0 +1,229 @@
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      ._container {
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        font-family: "Courier New", Courier, monospace;
+      }
+
+      .canvas-container {
+        width: 50%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .train-section {
+        background-color: #80cbc4;
+      }
+
+      .test-section {
+        background-color: #ffb74d;
+      }
+
+      .canvas {
+        border: solid 2px #373737;
+        margin: 5px;
+        margin: 0 auto;
+        cursor: pointer;
+      }
+
+      .btn-test {
+        margin: 0 auto;
+        margin-top: 50px;
+        height: 30px;
+        width: 100px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 2px;
+        font-weight: bold;
+        border: 2px solid #373737;
+        background-color: #ffab91;
+        color: #373737;
+        cursor: pointer;
+      }
+
+      .digits {
+        display: inline-flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 50px;
+      }
+
+      .digit {
+        height: 30px;
+        width: 30px;
+        line-height: 30px;
+        text-align: center;
+        border-radius: 2px;
+        font-weight: bold;
+        margin: 5px;
+        border: 2px solid #373737;
+        background-color: #ffab91;
+        color: #373737;
+        cursor: pointer;
+      }
+
+      .btn-test:hover,
+      .digit:hover {
+        background-color: #ffccbc;
+        transition: all 0.2s;
+      }
+    </style>
+    <div class="_container">
+      <div class="canvas-container train-section">
+        <h1>Train</h1>
+        <canvas
+          id="canvas-train"
+          height="200"
+          width="200"
+          class="canvas"
+        ></canvas>
+        <div class="digits">
+          <div class="digit" onclick="train(event)">0</div>
+          <div class="digit" onclick="train(event)">1</div>
+          <div class="digit" onclick="train(event)">2</div>
+          <div class="digit" onclick="train(event)">3</div>
+          <div class="digit" onclick="train(event)">4</div>
+          <div class="digit" onclick="train(event)">5</div>
+          <div class="digit" onclick="train(event)">6</div>
+          <div class="digit" onclick="train(event)">7</div>
+          <div class="digit" onclick="train(event)">8</div>
+          <div class="digit" onclick="train(event)">9</div>
+        </div>
+      </div>
+
+      <div class="canvas-container test-section">
+        <h1>Test</h1>
+        <canvas
+          id="canvas-test"
+          height="200"
+          width="200"
+          class="canvas"
+        ></canvas>
+        <div class="btn-test" onclick="test()">Test</div>
+      </div>
+    </div>
+    
+    <textarea id="code">
+      var mouseDown = false;
+      var canvasTest = document.getElementById("canvas-test");
+      var canvasTrain = document.getElementById("canvas-train");
+      var ctxTest = canvasTest.getContext("2d");
+      var ctxTrain = canvasTrain.getContext("2d");
+      var x1, y1, x2, y2;
+      applySettings(ctxTest);
+      applySettings(ctxTrain);
+
+      function applySettings(ctx) {
+        ctx.lineWidth = 5;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.strokeStyle = "#373737";
+      }
+
+      function handleMouseDown(e, ctx) {
+        mouseDown = true;
+        x1 = e.layerX;
+        y1 = e.layerY;
+      }
+
+      function handleMouseMove(e, ctx) {
+        if (mouseDown) {
+          x2 = e.layerX;
+          y2 = e.layerY;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
+          x1 = x2;
+          y1 = y2;
+        }
+      }
+
+      function handleMouseUp() {
+        mouseDown = false;
+      }
+
+      function clear(ctx){
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      }
+
+      canvasTest.onmousedown = e => handleMouseDown(e, ctxTest);
+      canvasTest.onmousemove = e => handleMouseMove(e, ctxTest);
+      canvasTest.onmouseup = handleMouseUp;
+      canvasTrain.onmousedown = e => handleMouseDown(e, ctxTrain);
+      canvasTrain.onmousemove = e => handleMouseMove(e, ctxTrain);
+      canvasTrain.onmouseup = handleMouseUp;
+
+      function train(e){
+        let digit = parseInt(e.srcElement.innerHTML);
+        document.body.style.cursor = 'wait';
+        doTrain(digit);
+        document.body.style.cursor = 'default';
+        clear(ctxTrain);
+      }
+
+      function test(){
+        doPrediction();
+        clear(ctxTest);
+      }
+
+
+      //machine learning specific 
+      async function run() { model = await getModel(); }
+
+    run(); 
+    async function getModel() { 
+      var MODEL_PATH = document.getElementById("model-path").value; 
+      const m = await tf.loadLayersModel(MODEL_PATH); 
+      const optimizer = tf.train.adam(); m.compile({
+        optimizer: optimizer, 
+        loss: 'categoricalCrossentropy', 
+        metrics: ['accuracy'],
+      }); 
+      console.log('model ready'); 
+      return m; 
+    }
+
+    async function doPrediction() { 
+     let tensor = tf.browser.fromPixels(canvasTest)
+        .resizeNearestNeighbor([28, 28])
+        .mean(2)
+        .expandDims(2)
+        .expandDims()
+        .toFloat().div(255.0);
+      let predictions = await model.predict(tensor).data(); 
+    
+      // get the model's prediction results 
+      let results = Array.from(predictions); 
+      console.log(results); 
+      alert(results.indexOf(Math.max(...results)));
+    }
+
+    async function doTrain(digit){
+      let tensor = tf.browser.fromPixels(canvasTrain)
+        .resizeNearestNeighbor([28, 28])
+        .mean(2)
+        .expandDims(2)
+        .expandDims()
+        .toFloat().div(255.0);
+
+      let labels = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      labels[digit] = 1;
+      let label = tf.tensor2d(labels, [1, 10]);
+      let h = await model.fit(tensor, label, {batchSize: 1, epochs: 1});
+      console.log('Loss', h.history);
+    }
+
+
+</textarea>
+  
