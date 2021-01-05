@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@deveodk/vue-toastr": "^1.0.4",
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "css-loader": "^0.28.11",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
