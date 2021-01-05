@@ -6,7 +6,7 @@
   "devDependencies": {},
   "dependencies": {
     "@tensorflow/tfjs-node": "^1.1.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
