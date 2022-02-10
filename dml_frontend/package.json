@@ -13,7 +13,7 @@
     "@deveodk/vue-toastr": "^1.0.4",
     "axios": "^0.16.2",
     "css-loader": "^0.28.11",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.18",
     "vue-router": "^2.7.0",
